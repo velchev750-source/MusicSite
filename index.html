@@ -22,6 +22,7 @@
 				--charcoal: #1c1c1c;
 				--gold: #bfa46f;
 				--soft-gray: #e3dfd7;
+				--navbar-height: 76px;
 			}
 
 			body {
@@ -64,7 +65,7 @@
 
 			.hero {
 				position: relative;
-				min-height: 100vh;
+				min-height: calc(100dvh - var(--navbar-height));
 				color: #fdfbf7;
 				background-color: #2b2a28;
 			}
@@ -72,7 +73,7 @@
 			.hero-carousel,
 			.hero-carousel .carousel-inner,
 			.hero-carousel .carousel-item {
-				height: 100vh;
+				height: calc(100dvh - var(--navbar-height));
 			}
 
 			.hero-slide {
@@ -192,10 +193,8 @@
 			}
 
 			@media (max-width: 767px) {
-				.hero-carousel,
-				.hero-carousel .carousel-inner,
-				.hero-carousel .carousel-item {
-					height: 70vh;
+				:root {
+					--navbar-height: 68px;
 				}
 			}
 		</style>
