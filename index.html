@@ -1,337 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Arte+ | Classical Trio</title>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-			crossorigin="anonymous"
-		/>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap"
-			rel="stylesheet"
-		/>
-		<style>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Arte+ | Classical Trio</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap"
+		rel="stylesheet" />
+	<style>
+		:root {
+			--ivory: #f8f5f0;
+			--charcoal: #1c1c1c;
+			--gold: #bfa46f;
+			--soft-gray: #e3dfd7;
+			--navbar-height: 76px;
+		}
+
+		body {
+			font-family: "Inter", sans-serif;
+			background-color: var(--ivory);
+			color: var(--charcoal);
+			line-height: 1.7;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4 {
+			font-family: "Playfair Display", serif;
+			letter-spacing: 0.4px;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+			transition: color 0.2s ease;
+		}
+
+		a:hover {
+			color: var(--gold);
+		}
+
+		.navbar {
+			background-color: rgba(248, 245, 240, 0.92);
+			border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+		}
+
+		.brand-logo {
+			height: 48px;
+			width: auto;
+			max-width: 200px;
+			display: block;
+			object-fit: contain;
+		}
+
+		.hero {
+			position: relative;
+			min-height: calc(100dvh - var(--navbar-height));
+			color: #fdfbf7;
+			background-color: #2b2a28;
+		}
+
+		.hero-carousel,
+		.hero-carousel .carousel-inner,
+		.hero-carousel .carousel-item {
+			height: calc(100dvh - var(--navbar-height));
+		}
+
+		.hero-slide {
+			position: relative;
+			height: 100%;
+			width: 100%;
+		}
+
+		.hero-image {
+			position: absolute;
+			inset: 0;
+			background: #2b2a28;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.hero-image.has-image {
+			background-size: contain;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-color: #121212;
+		}
+
+		/* When a real image is used, hide the placeholder overlay text */
+		.hero-image.has-image::after {
+			content: none;
+		}
+
+		.hero-image.variant-2 {
+			background: #302f2d;
+		}
+
+		.hero-image.variant-3 {
+			background: #262524;
+		}
+
+		.hero-image::after {
+			content: "IMAGE PLACEHOLDER";
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			letter-spacing: 0.3em;
+			font-weight: 600;
+			font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+			color: rgba(255, 255, 255, 0.35);
+			text-transform: uppercase;
+		}
+
+		.hero-overlay {
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.45);
+		}
+
+		/* Lessen darkening for slides that use real images so photos remain vivid */
+		.hero-image.has-image+.hero-overlay {
+			background: rgba(0, 0, 0, 0.18);
+		}
+
+		/* Slight brightness/contrast boost for background images */
+		.hero-image.has-image {
+			filter: brightness(1.04) contrast(1.03);
+		}
+
+		.hero-caption {
+			position: relative;
+			z-index: 1;
+			max-width: 760px;
+			padding: 6rem 1rem;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.btn-gold {
+			background-color: var(--gold);
+			color: var(--charcoal);
+			border: none;
+			padding: 0.85rem 2.4rem;
+			font-weight: 600;
+			letter-spacing: 0.4px;
+		}
+
+		.btn-gold:hover {
+			background-color: #a98c5a;
+			color: var(--charcoal);
+		}
+
+		.section {
+			padding: 5.5rem 0;
+		}
+
+		.section-title {
+			text-align: center;
+			max-width: 720px;
+			margin: 0 auto 3rem;
+		}
+
+		.placeholder-img {
+			background-color: #d8d3c9;
+			border: 1px solid #cfc8bc;
+		}
+
+		.carousel-item .placeholder-img {
+			height: 420px;
+		}
+
+		.divider {
+			width: 90px;
+			height: 1px;
+			background-color: var(--gold);
+			margin: 2rem auto;
+		}
+
+		.event-card {
+			border: 1px solid #e1dbd0;
+			padding: 2rem;
+			background-color: #fffaf2;
+			height: 100%;
+		}
+
+		footer {
+			padding: 2.5rem 0;
+			border-top: 1px solid #e1dbd0;
+		}
+
+		@media (max-width: 767px) {
 			:root {
-				--ivory: #f8f5f0;
-				--charcoal: #1c1c1c;
-				--gold: #bfa46f;
-				--soft-gray: #e3dfd7;
-				--navbar-height: 76px;
+				--navbar-height: 68px;
 			}
+		}
+	</style>
+</head>
 
-			body {
-				font-family: "Inter", sans-serif;
-				background-color: var(--ivory);
-				color: var(--charcoal);
-				line-height: 1.7;
-			}
-
-			h1,
-			h2,
-			h3,
-			h4 {
-				font-family: "Playfair Display", serif;
-				letter-spacing: 0.4px;
-			}
-
-			a {
-				color: inherit;
-				text-decoration: none;
-				transition: color 0.2s ease;
-			}
-
-			a:hover {
-				color: var(--gold);
-			}
-
-			.navbar {
-				background-color: rgba(248, 245, 240, 0.92);
-				border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-			}
-
-			.brand-logo {
-				height: 48px;
-				width: auto;
-				max-width: 200px;
-				display: block;
-				object-fit: contain;
-			}
-
-			.hero {
-				position: relative;
-				min-height: calc(100dvh - var(--navbar-height));
-				color: #fdfbf7;
-				background-color: #2b2a28;
-			}
-
-			.hero-carousel,
-			.hero-carousel .carousel-inner,
-			.hero-carousel .carousel-item {
-				height: calc(100dvh - var(--navbar-height));
-			}
-
-			.hero-slide {
-				position: relative;
-				height: 100%;
-				width: 100%;
-			}
-
-			.hero-image {
-				position: absolute;
-				inset: 0;
-				background: #2b2a28;
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-			}
-
-			.hero-image.has-image {
-				background-size: contain;
-				background-position: center center;
-				background-repeat: no-repeat;
-				background-color: #121212;
-			}
-
-			/* When a real image is used, hide the placeholder overlay text */
-			.hero-image.has-image::after {
-				content: none;
-			}
-
-			.hero-image.variant-2 {
-				background: #302f2d;
-			}
-
-			.hero-image.variant-3 {
-				background: #262524;
-			}
-
-			.hero-image::after {
-				content: "IMAGE PLACEHOLDER";
-				position: absolute;
-				inset: 0;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				letter-spacing: 0.3em;
-				font-weight: 600;
-				font-size: clamp(0.9rem, 1.4vw, 1.1rem);
-				color: rgba(255, 255, 255, 0.35);
-				text-transform: uppercase;
-			}
-
-			.hero-overlay {
-				position: absolute;
-				inset: 0;
-				background: rgba(0, 0, 0, 0.45);
-			}
-
-			/* Lessen darkening for slides that use real images so photos remain vivid */
-			.hero-image.has-image + .hero-overlay {
-				background: rgba(0, 0, 0, 0.18);
-			}
-
-			/* Slight brightness/contrast boost for background images */
-			.hero-image.has-image {
-				filter: brightness(1.04) contrast(1.03);
-			}
-
-			.hero-caption {
-				position: relative;
-				z-index: 1;
-				max-width: 760px;
-				padding: 6rem 1rem;
-				margin: 0 auto;
-				text-align: center;
-			}
-
-			.btn-gold {
-				background-color: var(--gold);
-				color: var(--charcoal);
-				border: none;
-				padding: 0.85rem 2.4rem;
-				font-weight: 600;
-				letter-spacing: 0.4px;
-			}
-
-			.btn-gold:hover {
-				background-color: #a98c5a;
-				color: var(--charcoal);
-			}
-
-			.section {
-				padding: 5.5rem 0;
-			}
-
-			.section-title {
-				text-align: center;
-				max-width: 720px;
-				margin: 0 auto 3rem;
-			}
-
-			.placeholder-img {
-				background-color: #d8d3c9;
-				border: 1px solid #cfc8bc;
-			}
-
-			.carousel-item .placeholder-img {
-				height: 420px;
-			}
-
-			.divider {
-				width: 90px;
-				height: 1px;
-				background-color: var(--gold);
-				margin: 2rem auto;
-			}
-
-			.event-card {
-				border: 1px solid #e1dbd0;
-				padding: 2rem;
-				background-color: #fffaf2;
-				height: 100%;
-			}
-
-			footer {
-				padding: 2.5rem 0;
-				border-top: 1px solid #e1dbd0;
-			}
-
-			@media (max-width: 767px) {
-				:root {
-					--navbar-height: 68px;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<!-- Header / Navbar -->
-		<header>
-			<nav class="navbar navbar-expand-lg sticky-top">
-				<div class="container">
-					<a class="navbar-brand" href="index.html">
-						<img src="images/logo.webp" alt="Arte+ Logo" class="brand-logo" />
-					</a>
-					<button
-						class="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#mainNav"
-						aria-controls="mainNav"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-end" id="mainNav">
-						<ul class="navbar-nav align-items-lg-center gap-lg-3">
-							  <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-							  <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-							  <li class="nav-item"><a class="nav-link" href="media.html">Media</a></li>
-							  <li class="nav-item"><a class="nav-link" href="book.html">Book</a></li>
-							  <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-							<!-- 'More' dropdown removed as requested -->
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</header>
-
-		<main>
-			<!-- Hero Section (Carousel for large images) -->
-			<section class="hero" id="home">
-				<div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
-					<div class="carousel-indicators">
-						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<div class="hero-slide">
-							<div class="hero-image has-image" style="background-image: url('images/carousel 1.webp');"></div>
-								<div class="hero-overlay"></div>
-								<div class="container h-100 d-flex align-items-center justify-content-center">
-									<div class="hero-caption"></div>
-								</div>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<div class="hero-slide">
-								<div class="hero-image has-image" style="background-image: url('images/carousel 2.webp');"></div>
-								<div class="hero-overlay"></div>
-								<div class="container h-100 d-flex align-items-center justify-content-center">
-									<div class="hero-caption"></div>
-								</div>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<div class="hero-slide">
-								<div class="hero-image has-image" style="background-image: url('images/carousel 3.webp');"></div>
-								<div class="hero-overlay"></div>
-								<div class="container h-100 d-flex align-items-center justify-content-center">
-									<div class="hero-caption"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			</section>
-
-			<!-- Carousel removed from frontpage per request -->
-
-			<!-- Text Panel Section -->
-			<section class="section" id="about">
-				<div class="container">
-					<div class="divider"></div>
-					<div class="section-title">
-						<h2 class="fw-semibold">A refined chamber experience</h2>
-						<p class="text-muted">
-							Arte+ is a refined chamber ensemble dedicated to expressive artistry and timeless musical tradition. Blending sensitivity, technical excellence, and a carefully curated repertoire, the trio brings elegance and emotional depth to every performance. From intimate private gatherings to distinguished concert settings, Arte+ crafts musical experiences that honor classical heritage while resonating with modern audiences.
-						</p>
-						<p class="text-muted">
-							Each Arte+ performance is shaped by atmosphere, connection, and attention to detail. The trio works closely with hosts and event organizers to create a musical setting that feels personal and seamlessly integrated into the occasion. Through thoughtful collaboration and artistic sensitivity, Arte+ transforms every concert into an intimate and memorable experience for both hosts and guests.
-						</p>
-					</div>
-					<div class="divider"></div>
-				</div>
-			</section>
-
-			<!-- Upcoming events removed from frontpage per request -->
-		</main>
-
-		<!-- Footer -->
-		<footer id="contact">
+<body>
+	<!-- Header / Navbar -->
+	<header>
+		<nav class="navbar navbar-expand-lg sticky-top">
 			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-md-6 mb-3 mb-md-0">
-						<strong>Arte+</strong>
+				<a class="navbar-brand" href="index.html">
+					<img src="images/logo.webp" alt="Arte+ Logo" class="brand-logo" />
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+					aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-end" id="mainNav">
+					<ul class="navbar-nav align-items-lg-center gap-lg-3">
+						<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+						<li class="nav-item"><a class="nav-link" href="media.html">Media</a></li>
+						<li class="nav-item"><a class="nav-link" href="book.html">Book</a></li>
+						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+						<!-- 'More' dropdown removed as requested -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<!-- Hero Section (Carousel for large images) -->
+		<section class="hero" id="home">
+			<div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"
+						aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"
+						aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"
+						aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="hero-slide">
+							<div class="hero-image has-image" style="background-image: url('images/carousel 1.webp');">
+							</div>
+							<div class="hero-overlay"></div>
+							<div class="container h-100 d-flex align-items-center justify-content-center">
+								<div class="hero-caption"></div>
+							</div>
+						</div>
 					</div>
-					<div class="col-md-6 text-md-end">
-						<span class="text-muted">Arte+@gmail.com · Stara Zagora, Bulgaria</span>
+					<div class="carousel-item">
+						<div class="hero-slide">
+							<div class="hero-image has-image" style="background-image: url('images/carousel 2.webp');">
+							</div>
+							<div class="hero-overlay"></div>
+							<div class="container h-100 d-flex align-items-center justify-content-center">
+								<div class="hero-caption"></div>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="hero-slide">
+							<div class="hero-image has-image" style="background-image: url('images/carousel 3.webp');">
+							</div>
+							<div class="hero-overlay"></div>
+							<div class="container h-100 d-flex align-items-center justify-content-center">
+								<div class="hero-caption"></div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="mt-3 text-muted small">© 2026 Arte+. All rights reserved.</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
 			</div>
-		</footer>
+		</section>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-			crossorigin="anonymous"
-		></script>
-	</body>
+		<!-- Carousel removed from frontpage per request -->
+
+		<!-- Text Panel Section -->
+		<section class="section" id="about">
+			<div class="container">
+				<div class="divider"></div>
+				<div class="section-title">
+					<h2 class="fw-semibold">A refined chamber experience</h2>
+					<p class="text-muted">
+						Arte+ presents a modern interpretation of classical music shaped by elegance, sophistication,
+						and artistic precision. Blending tradition with a contemporary aesthetic, the trio reimagines
+						timeless repertoire through refined phrasing, expressive nuance, and a visually graceful stage
+						presence. Their performances are not only heard — they are experienced.
+					</p>
+					<p class="text-muted">
+						With an exquisite balance of piano, flute, and violin, Arte+ creates an atmosphere where music
+						becomes an embodiment of style and distinction. Each appearance is carefully curated to
+						complement the character of the occasion, offering a seamless fusion of artistry and ambiance.
+						The trio's polished presentation and harmonious collaboration reflect a commitment to beauty in
+						both sound and form.
+					</p>
+					<p class="text-muted">
+						Choosing Arte+ is the most refined way to embrace elegance and timeless charm. Whether
+						performing at an intimate gathering or a distinguished celebration, the trio transforms every
+						event into something truly special — elevating the setting, enchanting the audience, and leaving
+						a lasting impression of grace, warmth, and unforgettable musical beauty. </p>
+				</div>
+				<div class="divider"></div>
+			</div>
+		</section>
+
+		<!-- Upcoming events removed from frontpage per request -->
+	</main>
+
+	<!-- Footer -->
+	<footer id="contact">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-6 mb-3 mb-md-0">
+					<strong>Arte+</strong>
+				</div>
+				<div class="col-md-6 text-md-end">
+					<span class="text-muted">Arte+@gmail.com · Stara Zagora, Bulgaria</span>
+				</div>
+			</div>
+			<div class="mt-3 text-muted small">© 2026 Arte+. All rights reserved.</div>
+		</div>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+</body>
+
 </html>
