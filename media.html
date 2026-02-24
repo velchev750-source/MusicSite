@@ -16,6 +16,9 @@
       .brand-logo{height:48px;width:auto;max-width:200px;display:block;object-fit:contain}
       .placeholder{background:#d8d3c9;border:1px solid #cfc8bc}
       .section{padding:4.5rem 0}
+      .media-link{display:block;height:220px;border:1px solid #e1dbd0;background:#fffaf2;color:var(--charcoal);text-decoration:none}
+      .media-link:hover{color:var(--charcoal);border-color:var(--gold)}
+      .media-link .label{font-family:"Playfair Display",serif;font-size:1.8rem;letter-spacing:.4px}
     </style>
   </head>
   <body>
@@ -50,16 +53,20 @@
           </div>
 
           <div class="row g-4">
-            <div class="col-md-6">
-              <div class="placeholder" style="height:320px;"></div>
+            <div class="col-md-4">
+              <a class="media-link d-flex align-items-center justify-content-center" href="/audio">
+                <span class="label">Audio</span>
+              </a>
             </div>
-            <div class="col-md-6">
-              <div class="row g-3">
-                <div class="col-6"><div class="placeholder" style="height:150px;"></div></div>
-                <div class="col-6"><div class="placeholder" style="height:150px;"></div></div>
-                <div class="col-6"><div class="placeholder" style="height:150px;"></div></div>
-                <div class="col-6"><div class="placeholder" style="height:150px;"></div></div>
-              </div>
+            <div class="col-md-4">
+              <a class="media-link d-flex align-items-center justify-content-center" href="/video">
+                <span class="label">Video</span>
+              </a>
+            </div>
+            <div class="col-md-4">
+              <a class="media-link d-flex align-items-center justify-content-center" href="/gallery">
+                <span class="label">Gallery</span>
+              </a>
             </div>
           </div>
         </div>
