@@ -85,6 +85,21 @@
 				position: absolute;
 				inset: 0;
 				background: #2b2a28;
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+
+			.hero-image.has-image {
+				background-size: contain;
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-color: #121212;
+			}
+
+			/* When a real image is used, hide the placeholder overlay text */
+			.hero-image.has-image::after {
+				content: none;
 			}
 
 			.hero-image.variant-2 {
@@ -230,7 +245,7 @@
 					<div class="carousel-inner">
 						<div class="carousel-item active">
 							<div class="hero-slide">
-								<div class="hero-image"></div>
+							<div class="hero-image has-image" style="background-image: url('images/carousel 1.webp');"></div>
 								<div class="hero-overlay"></div>
 								<div class="container h-100 d-flex align-items-center justify-content-center">
 									<div class="hero-caption"></div>
