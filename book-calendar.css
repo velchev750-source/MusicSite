@@ -1,0 +1,228 @@
+.booking-widget {
+  background-color: #fffaf2;
+  border: 1px solid #e1dbd0;
+  padding: 2rem;
+}
+
+.booking-widget .calendar-container {
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px 36px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(80, 77, 77, 0.2);
+}
+
+.booking-widget .calendar-header {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-family: "Playfair Display", serif;
+}
+
+.booking-widget .calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.booking-widget .calendar-nav button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #cfc9f6;
+  width: 42px;
+  height: 42px;
+}
+
+.booking-widget .calendar-nav button:hover {
+  background-color: #dedbf2;
+}
+
+.booking-widget .calendar-nav button span {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.booking-widget #currentMonthYear {
+  font-weight: 600;
+}
+
+.booking-widget .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.booking-widget .day.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.booking-widget .day {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 5px;
+  background-color: #eaeaea;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.booking-widget .day span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.booking-widget .day.afternoon::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
+  background-color: #dedbf2;
+  z-index: 1;
+}
+
+.booking-widget .day.morning::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+  background-color: #dedbf2;
+  z-index: 1;
+}
+
+.booking-widget .day.full {
+  background-color: #dedbf2;
+  z-index: 0;
+}
+
+.booking-widget .open-modal-btn {
+  background: #4a00e0;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 2rem 0 0;
+}
+
+.booking-widget .open-modal-btn:hover {
+  background: #3a00b3;
+}
+
+.booking-widget dialog {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: min(92vw, 420px);
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.booking-widget dialog.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.booking-widget dialog.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.booking-widget .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 20;
+  pointer-events: auto;
+  line-height: 1;
+}
+
+.booking-widget .modal-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.booking-widget .modal-content {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-widget .date-price,
+.booking-widget .price-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.booking-widget .date-price {
+  justify-content: center;
+}
+
+.booking-widget .day.selected {
+  background-color: #cfc9f6;
+}
+
+.booking-widget .booking-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.booking-widget .booking-form label span {
+  color: #b00020;
+}
+
+.booking-widget .booking-form input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.booking-widget .submit-btn {
+  background: #4a00e0;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.booking-widget .submit-btn:hover {
+  background: #3a00b3;
+}
