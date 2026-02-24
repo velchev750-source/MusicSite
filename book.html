@@ -9,25 +9,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
     <style>
-      :root{--ivory:#f8f5f0;--charcoal:#1c1c1c;--gold:#bfa46f}
+      :root{--ivory:#f8f5f0;--charcoal:#1c1c1c;--gold:#bfa46f;--soft-gray:#e3dfd7}
       body{font-family:Inter,arial,sans-serif;background:var(--ivory);color:var(--charcoal)}
       h1,h2{font-family:Playfair Display,serif}
+      .navbar{background-color:rgba(248,245,240,0.92);border-bottom:1px solid rgba(0,0,0,0.05)}
+      .brand-logo{height:48px;width:auto;max-width:200px;display:block;object-fit:contain}
       .section{padding:4.5rem 0}
-      .brand-logo{width:120px;height:40px;background:#e3dfd7;display:inline-block}
     </style>
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg sticky-top" style="background:rgba(248,245,240,0.95);border-bottom:1px solid rgba(0,0,0,0.05)">
+      <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><img src="images/logo.webp" alt="Arte+ Logo" class="brand-logo" /></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-          <div class="collapse navbar-collapse justify-content-end" id="nav">
-            <ul class="navbar-nav gap-lg-3">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/logo.webp" alt="Arte+ Logo" class="brand-logo" />
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+            <ul class="navbar-nav align-items-lg-center gap-lg-3">
               <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
               <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
               <li class="nav-item"><a class="nav-link" href="media.html">Media</a></li>
-              <li class="nav-item"><a class="nav-link active" href="book.html">Book</a></li>
+              <li class="nav-item"><a class="nav-link" href="book.html">Book</a></li>
               <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
             </ul>
           </div>
