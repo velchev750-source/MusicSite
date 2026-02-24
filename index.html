@@ -65,37 +65,63 @@
 			.hero {
 				position: relative;
 				min-height: 100vh;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
 				color: #fdfbf7;
 				background-color: #2b2a28;
 			}
 
-      /* hero carousel slide */
-      .hero-slide {
-        position: relative;
-        min-height: 100vh;
-        display: block;
-        width: 100%;
-        background-color: #2b2a28;
-      }
+			.hero-carousel,
+			.hero-carousel .carousel-inner,
+			.hero-carousel .carousel-item {
+				height: 100vh;
+			}
 
-      .hero-slide.variant-2 { background-color: #302f2d; }
-      .hero-slide.variant-3 { background-color: #262524; }
+			.hero-slide {
+				position: relative;
+				height: 100%;
+				width: 100%;
+			}
 
-      .hero-slide .overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.45);
-      }
+			.hero-image {
+				position: absolute;
+				inset: 0;
+				background: #2b2a28;
+			}
 
-			.hero-content {
+			.hero-image.variant-2 {
+				background: #302f2d;
+			}
+
+			.hero-image.variant-3 {
+				background: #262524;
+			}
+
+			.hero-image::after {
+				content: "IMAGE PLACEHOLDER";
+				position: absolute;
+				inset: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				letter-spacing: 0.3em;
+				font-weight: 600;
+				font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+				color: rgba(255, 255, 255, 0.35);
+				text-transform: uppercase;
+			}
+
+			.hero-overlay {
+				position: absolute;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+			}
+
+			.hero-caption {
 				position: relative;
 				z-index: 1;
+				max-width: 760px;
 				padding: 6rem 1rem;
-				max-width: 720px;
+				margin: 0 auto;
+				text-align: center;
 			}
 
 			.btn-gold {
@@ -151,12 +177,10 @@
 			}
 
 			@media (max-width: 767px) {
-				.hero {
-					min-height: 70vh;
-				}
-
-				.carousel-item .placeholder-img {
-					height: 260px;
+				.hero-carousel,
+				.hero-carousel .carousel-inner,
+				.hero-carousel .carousel-item {
+					height: 70vh;
 				}
 			}
 		</style>
@@ -195,17 +219,51 @@
 		</header>
 
 		<main>
-			<!-- Hero Section -->
+			<!-- Hero Section (Carousel for large images) -->
 			<section class="hero" id="home">
-				<div class="hero-content">
-					<h1 class="display-3 fw-semibold">Arte+</h1>
-					<p class="lead mt-3">
-						Placeholder text for a refined, poetic description of the trio’s
-						artistry and atmosphere.
-					</p>
-					<div class="mt-4">
-						<a class="btn btn-gold" href="#book">Book the Trio</a>
+				<div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<div class="hero-slide">
+								<div class="hero-image"></div>
+								<div class="hero-overlay"></div>
+								<div class="container h-100 d-flex align-items-center justify-content-center">
+									<div class="hero-caption"></div>
+								</div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="hero-slide">
+								<div class="hero-image variant-2"></div>
+								<div class="hero-overlay"></div>
+								<div class="container h-100 d-flex align-items-center justify-content-center">
+									<div class="hero-caption"></div>
+								</div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="hero-slide">
+								<div class="hero-image variant-3"></div>
+								<div class="hero-overlay"></div>
+								<div class="container h-100 d-flex align-items-center justify-content-center">
+									<div class="hero-caption"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
 			</section>
 
