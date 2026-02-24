@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/media"
+  to = "/media.html"
+  status = 200
+
+[[redirects]]
+  from = "/book"
+  to = "/book.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
