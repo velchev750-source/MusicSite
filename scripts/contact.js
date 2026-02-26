@@ -16,14 +16,70 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const nameInput = document.getElementById("contact-name");
+  const emailInput = document.getElementById("contact-email");
+  const messageInput = document.getElementById("contact-message");
+
+  if (!(nameInput instanceof HTMLInputElement) || !(emailInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement)) {
+    return;
+  }
+
+  const nameField = nameInput.closest(".col-md-6");
+  const emailField = emailInput.closest(".col-md-6");
+
+  let isAuthenticatedUser = false;
+  let resolvedName = "";
+  let resolvedEmail = "";
+
+  async function syncContactFields() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    isAuthenticatedUser = Boolean(session?.user);
+
+    if (isAuthenticatedUser) {
+      const user = session.user;
+      resolvedName =
+        user.user_metadata?.username ||
+        user.user_metadata?.full_name ||
+        user.email?.split("@")[0] ||
+        "Authenticated user";
+      resolvedEmail = user.user_metadata?.contact_email || user.email || "";
+
+      nameInput.value = resolvedName;
+      emailInput.value = resolvedEmail;
+      nameInput.required = false;
+      emailInput.required = false;
+      nameInput.disabled = true;
+      emailInput.disabled = true;
+      nameField?.classList.add("d-none");
+      emailField?.classList.add("d-none");
+      return;
+    }
+
+    resolvedName = "";
+    resolvedEmail = "";
+    nameInput.required = true;
+    emailInput.required = true;
+    nameInput.disabled = false;
+    emailInput.disabled = false;
+    nameField?.classList.remove("d-none");
+    emailField?.classList.remove("d-none");
+  }
+
+  syncContactFields();
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const name = document.getElementById("contact-name")?.value.trim() || "";
-    const email = document.getElementById("contact-email")?.value.trim() || "";
-    const message = document.getElementById("contact-message")?.value.trim() || "";
+    await syncContactFields();
 
-    if (!name || !email || !message) {
+    const message = messageInput.value.trim();
+    const name = isAuthenticatedUser ? resolvedName : nameInput.value.trim();
+    const email = isAuthenticatedUser ? resolvedEmail : emailInput.value.trim();
+
+    if (!message || (!isAuthenticatedUser && (!name || !email))) {
       setMessage("Please fill all fields.", true);
       return;
     }
@@ -45,6 +101,11 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     setMessage("Message sent successfully.");
-    form.reset();
+
+    if (isAuthenticatedUser) {
+      messageInput.value = "";
+    } else {
+      form.reset();
+    }
   });
 });
