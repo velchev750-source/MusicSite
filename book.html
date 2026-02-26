@@ -70,14 +70,34 @@
                       </div>
 
                       <form class="booking-form" id="bookingForm">
-                        <label for="name">Name<span>*</span></label>
-                        <input type="text" id="name" required />
+                        <label for="name">Type of Event<span>*</span></label>
+                        <select id="name" required>
+                          <option value="" selected disabled>Select event type</option>
+                          <option>Wedding Ceremony</option>
+                          <option>Wedding Reception</option>
+                          <option>Corporate Gala Dinner</option>
+                          <option>Private Birthday Party</option>
+                          <option>Anniversary Celebration</option>
+                          <option>Charity Fundraiser Event</option>
+                          <option>Cocktail Reception</option>
+                          <option>Award Ceremony</option>
+                          <option>Cultural Festival</option>
+                          <option>Funeral or Memorial Service</option>
+                        </select>
 
-                        <label for="email">Email<span>*</span></label>
-                        <input type="email" id="email" required />
+                        <label for="email">Time of Event<span>*</span></label>
+                        <input type="time" id="email" required step="60" />
 
-                        <label for="phone">Phone number<span>*</span></label>
-                        <input type="tel" id="phone" required />
+                        <label for="phone">Desired Duration<span>*</span></label>
+                        <select id="phone" required>
+                          <option value="" selected disabled>Select duration</option>
+                          <option>30 minutes</option>
+                          <option>1 hour</option>
+                          <option>1.5 hours</option>
+                          <option>2 hours</option>
+                          <option>3 hours</option>
+                          <option>4+ hours</option>
+                        </select>
 
                         <button class="submit-btn" type="submit">Send booking request</button>
                       </form>

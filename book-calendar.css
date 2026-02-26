@@ -31,15 +31,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
+  border: 1px solid #d8cdb8;
   border-radius: 50%;
-  background-color: #cfc9f6;
+  background-color: #f2e8d6;
   width: 42px;
   height: 42px;
 }
 
 .booking-widget .calendar-nav button:hover {
-  background-color: #dedbf2;
+  background-color: #e6d7bc;
 }
 
 .booking-widget .calendar-nav button span {
@@ -93,7 +93,7 @@
   width: 100%;
   height: 100%;
   clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
-  background-color: #dedbf2;
+  background-color: #efe2ca;
   z-index: 1;
 }
 
@@ -105,42 +105,52 @@
   width: 100%;
   height: 100%;
   clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
-  background-color: #dedbf2;
+  background-color: #efe2ca;
   z-index: 1;
 }
 
 .booking-widget .day.full {
-  background-color: #dedbf2;
+  background-color: #eadcc3;
   z-index: 0;
 }
 
 .booking-widget .open-modal-btn {
-  background: #4a00e0;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 10px 22px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
   cursor: pointer;
   font-size: 1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
   margin: 2rem 0 0;
 }
 
 .booking-widget .open-modal-btn:hover {
-  background: #3a00b3;
+  background: #aa905f;
+  border-color: #aa905f;
 }
 
 .booking-widget dialog {
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: min(92vw, 420px);
-  padding: 20px;
+  border: 1px solid #e1dbd0;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(28, 28, 28, 0.18);
+  width: min(92vw, 500px);
+  padding: 26px 20px 20px;
   box-sizing: border-box;
   position: relative;
+  background: #fffaf2;
+  color: var(--charcoal);
   opacity: 0;
   transform: translateY(-20px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.booking-widget dialog::backdrop {
+  background: rgba(28, 28, 28, 0.42);
 }
 
 .booking-widget dialog.show {
@@ -157,20 +167,25 @@
 
 .booking-widget .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
+  color: var(--charcoal);
   z-index: 20;
   pointer-events: auto;
   line-height: 1;
 }
 
 .booking-widget .modal-content h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 2.15rem;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  text-align: center;
 }
 
 .booking-widget .modal-content {
@@ -182,7 +197,7 @@
 .booking-widget .price-summary {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   gap: 8px;
 }
 
@@ -191,38 +206,59 @@
 }
 
 .booking-widget .day.selected {
-  background-color: #cfc9f6;
+  background-color: #d9bf8b;
+  border: 1px solid #bfa46f;
 }
 
 .booking-widget .booking-form label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
   font-weight: 600;
+  text-align: center;
 }
 
 .booking-widget .booking-form label span {
   color: #b00020;
 }
 
-.booking-widget .booking-form input {
+.booking-widget .booking-form input,
+.booking-widget .booking-form select {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.booking-widget .submit-btn {
-  background: #4a00e0;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #d8cdb8;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--charcoal);
+  font-family: var(--font-body);
   font-size: 1rem;
 }
 
+.booking-widget .booking-form input:focus,
+.booking-widget .booking-form select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(191, 164, 111, 0.2);
+}
+
+.booking-widget .submit-btn {
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 11px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
 .booking-widget .submit-btn:hover {
-  background: #3a00b3;
+  background: #aa905f;
+  border-color: #aa905f;
 }
