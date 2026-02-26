@@ -56,6 +56,44 @@ a:hover {
   letter-spacing: 0.06em;
 }
 
+.nav-auth-item {
+  margin-left: 0.2rem;
+}
+
+.nav-auth-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.nav-auth-btn-outline {
+  color: var(--charcoal);
+  border: 1px solid var(--gold);
+  background: transparent;
+}
+
+.nav-auth-btn-outline:hover {
+  color: var(--charcoal);
+  background-color: rgba(191, 164, 111, 0.16);
+}
+
+.nav-auth-btn-solid {
+  color: #fff;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+}
+
+.nav-auth-btn-solid:hover {
+  color: #fff;
+  background-color: #aa905f;
+  border-color: #aa905f;
+}
+
 .brand-logo {
   height: 48px;
   width: auto;
@@ -256,5 +294,15 @@ footer .small {
 @media (max-width: 767px) {
   :root {
     --navbar-height: 68px;
+  }
+
+  .nav-auth-item {
+    margin-left: 0;
+  }
+
+  .nav-auth-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    text-align: center;
   }
 }
