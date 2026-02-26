@@ -443,6 +443,19 @@ a:hover {
   object-fit: contain;
 }
 
+.video-embed-card {
+  border: 1px solid #e1dbd0;
+  background: #fffaf2;
+  padding: 0.65rem;
+}
+
+.video-embed-card iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background: #121212;
+}
+
 .form-control {
   border-radius: 0;
 }

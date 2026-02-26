@@ -34,12 +34,33 @@
             <h1 class="auth-title">Media Upload</h1>
             <form id="adminMediaForm" class="auth-form" novalidate>
               <div class="mb-3">
+                <label for="adminMediaType" class="form-label">Media Type</label>
+                <select id="adminMediaType" class="form-select" required>
+                  <option value="">Select media type</option>
+                  <option value="photo">Photo</option>
+                  <option value="audio">Audio</option>
+                  <option value="video">Video</option>
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="adminMediaFile" class="form-label">Choose file</label>
                 <input id="adminMediaFile" class="form-control" type="file" required />
               </div>
+              <div id="adminMediaVideoUrlGroup" class="mb-3 d-none">
+                <label for="adminMediaVideoUrl" class="form-label">Video URL</label>
+                <input id="adminMediaVideoUrl" class="form-control" type="url" placeholder="https://" />
+              </div>
               <p id="adminMediaMessage" class="account-history-message" aria-live="polite"></p>
-              <button type="submit" class="btn auth-submit-btn w-100">Upload</button>
+              <button id="adminMediaSubmit" type="submit" class="btn auth-submit-btn w-100" disabled>Upload</button>
             </form>
+
+            <hr class="my-4" />
+
+            <section class="account-history-panel">
+              <h2 class="account-history-title">Video Embeds</h2>
+              <p id="adminEmbedMessage" class="account-history-message" aria-live="polite"></p>
+              <div id="adminEmbedList" class="account-history-list"></div>
+            </section>
           </div>
         </div>
       </section>
@@ -47,6 +68,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script type="module" src="scripts/auth-ui.js"></script>
-    <script type="module" src="scripts/admin-media.js"></script>
+    <script type="module" src="scripts/admin-media.ts"></script>
   </body>
 </html>
