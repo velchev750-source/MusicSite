@@ -277,6 +277,20 @@ a:hover {
   border-color: #aa905f;
 }
 
+.auth-message {
+  min-height: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.auth-message-error {
+  color: #9f2b2b;
+}
+
+.auth-message-success {
+  color: #35663a;
+}
+
 .placeholder,
 .placeholder-img {
   background-color: #d8d3c9;
