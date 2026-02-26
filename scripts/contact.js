@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const nameInput = document.getElementById("contact-name");
   const emailInput = document.getElementById("contact-email");
   const messageInput = document.getElementById("contact-message");
+  const authHint = document.getElementById("contact-auth-hint");
 
   if (!(nameInput instanceof HTMLInputElement) || !(emailInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement)) {
     return;
@@ -55,6 +56,10 @@ window.addEventListener("DOMContentLoaded", () => {
       emailInput.disabled = true;
       nameField?.classList.add("d-none");
       emailField?.classList.add("d-none");
+      if (authHint instanceof HTMLElement) {
+        authHint.textContent = `Sending as: ${resolvedName}${resolvedEmail ? ` (${resolvedEmail})` : ""}`;
+        authHint.classList.remove("d-none");
+      }
       return;
     }
 
@@ -66,6 +71,10 @@ window.addEventListener("DOMContentLoaded", () => {
     emailInput.disabled = false;
     nameField?.classList.remove("d-none");
     emailField?.classList.remove("d-none");
+    if (authHint instanceof HTMLElement) {
+      authHint.textContent = "";
+      authHint.classList.add("d-none");
+    }
   }
 
   syncContactFields();
