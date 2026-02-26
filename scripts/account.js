@@ -81,7 +81,7 @@ function renderBookingHistory(bookings) {
 
 async function loadBookingHistory(userId) {
   const { data, error } = await supabase
-    .from("booking_requests")
+    .from("booking_inquiries")
     .select("id, event_type, event_date, event_time, desired_duration, status, created_at")
     .eq("user_id", userId)
     .order("event_date", { ascending: false })
@@ -97,7 +97,7 @@ async function loadBookingHistory(userId) {
 
 async function cancelBookingRequest(bookingId, userId) {
   const { error } = await supabase
-    .from("booking_requests")
+    .from("booking_inquiries")
     .update({ status: "cancelled", cancelled_at: new Date().toISOString() })
     .eq("id", bookingId)
     .eq("user_id", userId)

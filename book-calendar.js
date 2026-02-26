@@ -14,12 +14,6 @@ import { supabase } from "./scripts/supabaseClient.js";
     return date.toISOString().split("T")[0];
   }
 
-  function addDaysUtc(date, days) {
-    const nextDate = new Date(date);
-    nextDate.setUTCDate(nextDate.getUTCDate() + days);
-    return nextDate;
-  }
-
   const today = new Date(
     Date.UTC(
       new Date().getUTCFullYear(),
@@ -32,39 +26,54 @@ import { supabase } from "./scripts/supabaseClient.js";
   let currentYear = today.getUTCFullYear();
   let selectedDate = null;
 
-  const occupiedDates = new Set();
+  const blockedDates = new Set();
 
-  async function loadOccupiedDatesForCurrentUser() {
-    const { data: sessionData } = await supabase.auth.getSession();
-    const userId = sessionData.session?.user?.id;
+  function toDateKey(dateValue) {
+    return dateValue.toISOString().split("T")[0];
+  }
 
-    if (!userId) {
-      occupiedDates.clear();
-      return;
-    }
+  async function loadBlockedDatesForVisibleMonth() {
+    const monthStart = new Date(Date.UTC(currentYear, currentMonth, 1));
+    const monthEnd = new Date(Date.UTC(currentYear, currentMonth + 1, 1));
+
+    blockedDates.clear();
 
     const { data, error } = await supabase
-      .from("booking_requests")
-      .select("event_date, status")
-      .eq("user_id", userId)
-      .in("status", ["pending", "confirmed"]);
+      .from("bookings")
+      .select("start_at, end_at")
+      .lt("start_at", monthEnd.toISOString())
+      .gt("end_at", monthStart.toISOString());
 
     if (error) {
       return;
     }
 
-    occupiedDates.clear();
     (data || []).forEach((booking) => {
-      if (booking.event_date) {
-        occupiedDates.add(booking.event_date);
+      if (!booking.start_at || !booking.end_at) {
+        return;
+      }
+
+      const start = new Date(booking.start_at);
+      const end = new Date(booking.end_at);
+
+      if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+        return;
+      }
+
+      const cursor = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
+      const last = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()));
+
+      while (cursor <= last) {
+        blockedDates.add(toDateKey(cursor));
+        cursor.setUTCDate(cursor.getUTCDate() + 1);
       }
     });
   }
 
   function handleDateSelection(dayDiv) {
     const pickedDate = new Date(`${dayDiv.dataset.date}T00:00:00Z`);
-    if (occupiedDates.has(normalizeDate(pickedDate))) {
-      window.alert("This date is already booked.");
+    if (blockedDates.has(normalizeDate(pickedDate))) {
+      window.alert("This date is unavailable.");
       return;
     }
 
@@ -72,7 +81,9 @@ import { supabase } from "./scripts/supabaseClient.js";
     updateCalendar();
   }
 
-  function updateCalendar() {
+  async function updateCalendar() {
+    await loadBlockedDatesForVisibleMonth();
+
     calendar.innerHTML = "";
 
     const firstDay = new Date(Date.UTC(currentYear, currentMonth, 1));
@@ -105,7 +116,7 @@ import { supabase } from "./scripts/supabaseClient.js";
         dayDiv.classList.add("disabled");
       }
 
-      if (occupiedDates.has(dateStr)) {
+      if (blockedDates.has(dateStr)) {
         dayDiv.classList.add("full", "disabled");
       }
 
@@ -123,7 +134,7 @@ import { supabase } from "./scripts/supabaseClient.js";
 
   }
 
-  prevMonthBtn.addEventListener("click", () => {
+  prevMonthBtn.addEventListener("click", async () => {
     currentMonth -= 1;
 
     if (currentMonth < 0) {
@@ -131,10 +142,10 @@ import { supabase } from "./scripts/supabaseClient.js";
       currentYear -= 1;
     }
 
-    updateCalendar();
+    await updateCalendar();
   });
 
-  nextMonthBtn.addEventListener("click", () => {
+  nextMonthBtn.addEventListener("click", async () => {
     currentMonth += 1;
 
     if (currentMonth > 11) {
@@ -142,7 +153,7 @@ import { supabase } from "./scripts/supabaseClient.js";
       currentYear += 1;
     }
 
-    updateCalendar();
+    await updateCalendar();
   });
 
   const dialog = document.getElementById("bookingDialog");
@@ -230,7 +241,7 @@ import { supabase } from "./scripts/supabaseClient.js";
     const eventTime = document.getElementById("email")?.value || "";
     const desiredDuration = document.getElementById("phone")?.value || "";
 
-    const { error } = await supabase.from("booking_requests").insert({
+    const { error } = await supabase.from("booking_inquiries").insert({
       user_id: session.user.id,
       event_type: eventType,
       event_date: normalizeDate(selectedDate),
@@ -244,14 +255,13 @@ import { supabase } from "./scripts/supabaseClient.js";
       return;
     }
 
-    occupiedDates.add(normalizeDate(selectedDate));
     selectedDate = null;
     selectedBookingDate.textContent = "—";
 
     closeBookingDialog();
     bookingForm.reset();
-    updateCalendar();
+    await updateCalendar();
   });
 
-  loadOccupiedDatesForCurrentUser().then(updateCalendar);
+  updateCalendar();
 })();
