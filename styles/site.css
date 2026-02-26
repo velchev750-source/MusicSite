@@ -215,6 +215,68 @@ a:hover {
   margin: 0 auto 3rem;
 }
 
+.auth-main {
+  min-height: calc(100dvh - var(--navbar-height));
+}
+
+.auth-card {
+  max-width: 560px;
+  background: #fffaf2;
+  border: 1px solid #e1dbd0;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 14px 34px rgba(28, 28, 28, 0.12);
+}
+
+.auth-title {
+  text-align: center;
+  margin-bottom: 0.35rem;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.auth-subtitle {
+  text-align: center;
+  margin-bottom: 1.4rem;
+  color: #5a554e;
+}
+
+.auth-form .form-label {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.auth-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #d8cdb8;
+  background: #fff;
+  padding: 0.7rem 0.85rem;
+}
+
+.auth-form .form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.2rem rgba(191, 164, 111, 0.2);
+}
+
+.auth-submit-btn {
+  background: var(--gold);
+  color: var(--charcoal);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  padding: 0.65rem 1.1rem;
+}
+
+.auth-submit-btn:hover {
+  color: var(--charcoal);
+  background: #aa905f;
+  border-color: #aa905f;
+}
+
 .placeholder,
 .placeholder-img {
   background-color: #d8d3c9;
