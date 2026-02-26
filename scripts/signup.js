@@ -27,6 +27,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     const submitButton = form.querySelector("button[type='submit']");
     const usernameRaw = document.getElementById("signup-username")?.value.trim() || "";
     const password = document.getElementById("signup-password")?.value || "";
+    const contactEmail = document.getElementById("signup-email")?.value.trim() || "";
+    const telephone = document.getElementById("signup-phone")?.value.trim() || "";
     const username = normalizeUsername(usernameRaw);
     const email = usernameToAuthEmail(usernameRaw);
 
@@ -47,6 +49,8 @@ window.addEventListener("DOMContentLoaded", async () => {
       options: {
         data: {
           username,
+          contact_email: contactEmail || null,
+          telephone: telephone || null,
         },
       },
     });
