@@ -291,6 +291,94 @@ a:hover {
   color: #35663a;
 }
 
+.account-history-panel {
+  border: 1px solid #e1dbd0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.account-history-title {
+  font-size: 1.45rem;
+  margin-bottom: 0.5rem;
+}
+
+.account-history-message {
+  margin-bottom: 0.6rem;
+  color: #5b5650;
+}
+
+.account-history-message-error {
+  color: #9f2b2b;
+}
+
+.account-history-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.account-booking-item {
+  border: 1px solid #e9ddc8;
+  background: #fffaf2;
+  border-radius: 10px;
+  padding: 0.85rem;
+}
+
+.account-booking-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.45rem;
+}
+
+.account-booking-row h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.account-booking-status {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.account-booking-status-pending,
+.account-booking-status-confirmed {
+  background: #f3ead7;
+  border-color: #cfb784;
+  color: #5f4d2a;
+}
+
+.account-booking-status-completed {
+  background: #e7f1e8;
+  border-color: #a9c9ae;
+  color: #2f5a38;
+}
+
+.account-booking-status-cancelled {
+  background: #f4f4f4;
+  border-color: #d6d6d6;
+  color: #616161;
+}
+
+.account-cancel-btn {
+  border: 1px solid #c3a466;
+  color: #5e4c2a;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.account-cancel-btn:hover {
+  background: #f3ead7;
+  color: #5e4c2a;
+}
+
 .placeholder,
 .placeholder-img {
   background-color: #d8d3c9;

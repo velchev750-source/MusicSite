@@ -36,3 +36,17 @@ If using TypeScript, update generated database types after running migrations.
 Always run:
 supabase db push
 and confirm there are no errors before committing changes.
+
+## 11. Keep remote and local migrations in sync at all times.
+Every Supabase migration applied to the project must also exist in this repo under:
+- supabase/migrations/
+
+If a migration exists remotely but not locally, create the missing local file immediately before continuing work.
+
+## 12. Required workflow for every DB change.
+1. Create local migration file in `supabase/migrations/<timestamp>_<name>.sql`
+2. Apply migration to Supabase
+3. Confirm migration appears in remote list
+4. Commit code + migration file together
+
+Do not ship DB changes without the matching SQL migration file in the repository.

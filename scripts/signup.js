@@ -1,5 +1,6 @@
-import { supabase } from "./supabase-client.js";
+import { supabase } from "./supabaseClient.js";
 import { initAuthUi, redirectIfAuthenticated } from "./auth-common.js";
+import { normalizeUsername, usernameToAuthEmail } from "./auth-identifier.js";
 
 function showMessage(message, isError = false) {
   const messageBox = document.getElementById("signup-message");
@@ -24,10 +25,15 @@ window.addEventListener("DOMContentLoaded", async () => {
     event.preventDefault();
 
     const submitButton = form.querySelector("button[type='submit']");
-    const username = document.getElementById("signup-username")?.value.trim() || "";
+    const usernameRaw = document.getElementById("signup-username")?.value.trim() || "";
     const password = document.getElementById("signup-password")?.value || "";
-    const email = document.getElementById("signup-email")?.value.trim() || "";
-    const telephone = document.getElementById("signup-phone")?.value.trim() || "";
+    const username = normalizeUsername(usernameRaw);
+    const email = usernameToAuthEmail(usernameRaw);
+
+    if (!username || !password) {
+      showMessage("Username and password are required.", true);
+      return;
+    }
 
     if (submitButton) {
       submitButton.disabled = true;
@@ -41,7 +47,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       options: {
         data: {
           username,
-          telephone: telephone || null,
         },
       },
     });
@@ -51,6 +56,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (error) {
+      if ((error.message || "").toLowerCase().includes("already registered")) {
+        showMessage("This username is already taken.", true);
+        return;
+      }
       showMessage(error.message, true);
       return;
     }
@@ -60,6 +69,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    showMessage("Sign up successful. Please check your email to confirm your account.");
+    showMessage("Sign up successful. You can now log in with your username and password.");
   });
 });

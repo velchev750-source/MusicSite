@@ -1,3 +1,5 @@
+import { supabase } from "./scripts/supabaseClient.js";
+
 (() => {
   const calendar = document.getElementById("bookCalendar");
   const currentMonthYear = document.getElementById("currentMonthYear");
@@ -30,15 +32,38 @@
   let currentYear = today.getUTCFullYear();
   let selectedDate = null;
 
-  const occupiedDates = [
-    normalizeDate(addDaysUtc(today, 5)),
-    normalizeDate(addDaysUtc(today, 12)),
-    normalizeDate(addDaysUtc(today, 23)),
-  ];
+  const occupiedDates = new Set();
+
+  async function loadOccupiedDatesForCurrentUser() {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const userId = sessionData.session?.user?.id;
+
+    if (!userId) {
+      occupiedDates.clear();
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("booking_requests")
+      .select("event_date, status")
+      .eq("user_id", userId)
+      .in("status", ["pending", "confirmed"]);
+
+    if (error) {
+      return;
+    }
+
+    occupiedDates.clear();
+    (data || []).forEach((booking) => {
+      if (booking.event_date) {
+        occupiedDates.add(booking.event_date);
+      }
+    });
+  }
 
   function handleDateSelection(dayDiv) {
     const pickedDate = new Date(`${dayDiv.dataset.date}T00:00:00Z`);
-    if (occupiedDates.includes(normalizeDate(pickedDate))) {
+    if (occupiedDates.has(normalizeDate(pickedDate))) {
       window.alert("This date is already booked.");
       return;
     }
@@ -80,7 +105,7 @@
         dayDiv.classList.add("disabled");
       }
 
-      if (occupiedDates.includes(dateStr)) {
+      if (occupiedDates.has(dateStr)) {
         dayDiv.classList.add("full", "disabled");
       }
 
@@ -185,14 +210,41 @@
     }
   });
 
-  bookingForm.addEventListener("submit", (event) => {
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (!selectedDate) {
       return;
     }
 
-    occupiedDates.push(normalizeDate(selectedDate));
+    const { data: sessionData } = await supabase.auth.getSession();
+    const session = sessionData.session;
+
+    if (!session) {
+      window.alert("Please log in before sending a booking request.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const eventType = document.getElementById("name")?.value || "";
+    const eventTime = document.getElementById("email")?.value || "";
+    const desiredDuration = document.getElementById("phone")?.value || "";
+
+    const { error } = await supabase.from("booking_requests").insert({
+      user_id: session.user.id,
+      event_type: eventType,
+      event_date: normalizeDate(selectedDate),
+      event_time: eventTime,
+      desired_duration: desiredDuration,
+      status: "pending",
+    });
+
+    if (error) {
+      window.alert(error.message || "Could not save booking request. Please try again.");
+      return;
+    }
+
+    occupiedDates.add(normalizeDate(selectedDate));
     selectedDate = null;
     selectedBookingDate.textContent = "—";
 
@@ -201,5 +253,5 @@
     updateCalendar();
   });
 
-  updateCalendar();
+  loadOccupiedDatesForCurrentUser().then(updateCalendar);
 })();

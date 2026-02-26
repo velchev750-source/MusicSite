@@ -1,5 +1,6 @@
-import { supabase } from "./supabase-client.js";
+import { supabase } from "./supabaseClient.js";
 import { initAuthUi, redirectIfAuthenticated } from "./auth-common.js";
+import { identifierToEmail } from "./auth-identifier.js";
 
 function showMessage(message, isError = false) {
   const messageBox = document.getElementById("login-message");
@@ -24,8 +25,14 @@ window.addEventListener("DOMContentLoaded", async () => {
     event.preventDefault();
 
     const submitButton = form.querySelector("button[type='submit']");
-    const username = document.getElementById("login-username")?.value.trim() || "";
+    const identifier = document.getElementById("login-identifier")?.value.trim() || "";
+    const email = identifierToEmail(identifier);
     const password = document.getElementById("login-password")?.value || "";
+
+    if (!identifier || !password) {
+      showMessage("Username and password are required.", true);
+      return;
+    }
 
     if (submitButton) {
       submitButton.disabled = true;
@@ -34,7 +41,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     showMessage("");
 
     const { error } = await supabase.auth.signInWithPassword({
-      email: username,
+      email,
       password,
     });
 
@@ -43,7 +50,14 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (error) {
-      showMessage(error.message, true);
+      const lower = (error.message || "").toLowerCase();
+      if (lower.includes("invalid login credentials")) {
+        showMessage("Invalid email or password.", true);
+      } else if (lower.includes("email not confirmed")) {
+        showMessage("Please confirm your email before logging in.", true);
+      } else {
+        showMessage(error.message, true);
+      }
       return;
     }
 
