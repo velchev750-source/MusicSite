@@ -25,7 +25,19 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     showAdminMessage("adminMediaMessage", "Uploading...");
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.access_token) {
+      showAdminMessage("adminMediaMessage", "Your session expired. Please log in again.", true);
+      return;
+    }
+
     const { data, error } = await supabase.functions.invoke("admin-media-upload", {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
       body: { fileName: file.name },
     });
 

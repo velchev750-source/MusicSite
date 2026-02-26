@@ -103,7 +103,20 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     target.setAttribute("disabled", "true");
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.access_token) {
+      showAdminMessage("adminRequestsMessage", "Your session expired. Please log in again.", true);
+      target.removeAttribute("disabled");
+      return;
+    }
+
     const { data, error } = await supabase.functions.invoke("admin-review-booking", {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
       body: {
         inquiryId,
         action,
