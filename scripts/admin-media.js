@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient.js";
+import { supabase, SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./supabaseClient.js";
 import { requireAdmin, showAdminMessage } from "./admin-common.js";
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -34,15 +34,25 @@ window.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const { data, error } = await supabase.functions.invoke("admin-media-upload", {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/admin-media-upload`, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_PUBLISHABLE_KEY,
         Authorization: `Bearer ${session.access_token}`,
       },
-      body: { fileName: file.name },
+      body: JSON.stringify({ fileName: file.name }),
     });
 
-    if (error || data?.error) {
-      showAdminMessage("adminMediaMessage", data?.error || error?.message || "Failed to prepare upload.", true);
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      data = null;
+    }
+
+    if (!response.ok || data?.error) {
+      showAdminMessage("adminMediaMessage", data?.error || `Failed to prepare upload (${response.status}).`, true);
       return;
     }
 

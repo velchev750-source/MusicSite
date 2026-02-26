@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient.js";
+import { supabase, SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./supabaseClient.js";
 import { requireAdmin, showAdminMessage } from "./admin-common.js";
 
 function escapeHtml(value) {
@@ -113,18 +113,25 @@ window.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const { data, error } = await supabase.functions.invoke("admin-review-booking", {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/admin-review-booking`, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_PUBLISHABLE_KEY,
         Authorization: `Bearer ${session.access_token}`,
       },
-      body: {
-        inquiryId,
-        action,
-      },
+      body: JSON.stringify({ inquiryId, action }),
     });
 
-    if (error || data?.error) {
-      showAdminMessage("adminRequestsMessage", data?.error || error?.message || "Action failed.", true);
+    let payload = null;
+    try {
+      payload = await response.json();
+    } catch {
+      payload = null;
+    }
+
+    if (!response.ok || payload?.error) {
+      showAdminMessage("adminRequestsMessage", payload?.error || `Action failed (${response.status}).`, true);
       target.removeAttribute("disabled");
       return;
     }

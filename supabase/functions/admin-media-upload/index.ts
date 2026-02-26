@@ -4,8 +4,45 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-auth-user, x-jwt-claims",
 };
+
+async function resolveAuthUserId(req: Request, adminClient: any): Promise<string | null> {
+  const authHeader = req.headers.get("authorization") || req.headers.get("Authorization");
+
+  if (authHeader?.toLowerCase().startsWith("bearer ")) {
+    const token = authHeader.slice(7).trim();
+    if (token) {
+      const {
+        data: { user },
+        error,
+      } = await adminClient.auth.getUser(token);
+
+      if (!error && user?.id) {
+        return user.id;
+      }
+    }
+  }
+
+  const headerUser = req.headers.get("x-supabase-auth-user");
+  if (headerUser) {
+    return headerUser;
+  }
+
+  const jwtClaims = req.headers.get("x-jwt-claims");
+  if (jwtClaims) {
+    try {
+      const parsed = JSON.parse(jwtClaims);
+      if (parsed?.sub) {
+        return String(parsed.sub);
+      }
+    } catch {
+      // ignore malformed claims
+    }
+  }
+
+  return null;
+}
 
 function response(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -25,35 +62,22 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
 
-    if (!supabaseUrl || !serviceRoleKey || !anonKey) {
+    if (!supabaseUrl || !serviceRoleKey) {
       return response({ error: "Missing Supabase environment configuration." }, 500);
     }
 
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
-      return response({ error: "Missing authorization header." }, 401);
-    }
-
-    const userClient = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
     const adminClient = createClient(supabaseUrl, serviceRoleKey);
 
-    const {
-      data: { user },
-      error: userError,
-    } = await userClient.auth.getUser();
-
-    if (userError || !user) {
+    const authUserId = await resolveAuthUserId(req, adminClient);
+    if (!authUserId) {
       return response({ error: "Unauthorized." }, 401);
     }
 
     const { data: adminRow, error: adminError } = await adminClient
       .from("admins")
       .select("user_id")
-      .eq("user_id", user.id)
+      .eq("user_id", authUserId)
       .maybeSingle();
 
     if (adminError || !adminRow) {
