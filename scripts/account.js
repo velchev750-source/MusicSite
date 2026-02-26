@@ -132,6 +132,16 @@ window.addEventListener("DOMContentLoaded", async () => {
     usernameElement.value = session.user.user_metadata?.username || "-";
   }
 
+  const { data: adminRole } = await supabase
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  document.querySelectorAll("[data-admin-only]").forEach((element) => {
+    element.classList.toggle("d-none", !adminRole);
+  });
+
   await loadBookingHistory(userId);
 
   const historyList = document.getElementById("bookingHistoryList");

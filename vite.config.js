@@ -13,7 +13,10 @@ module.exports = defineConfig({
         contact: resolve(__dirname, 'contact.html'),
         signin: resolve(__dirname, 'signin.html'),
         login: resolve(__dirname, 'login.html'),
-        account: resolve(__dirname, 'account.html')
+        account: resolve(__dirname, 'account.html'),
+        adminRequests: resolve(__dirname, 'admin-requests.html'),
+        adminMessages: resolve(__dirname, 'admin-messages.html'),
+        adminMedia: resolve(__dirname, 'admin-media.html')
       }
     }
   }

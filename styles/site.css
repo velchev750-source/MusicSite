@@ -312,6 +312,10 @@ a:hover {
   color: #9f2b2b;
 }
 
+.admin-message-error {
+  color: #9f2b2b;
+}
+
 .account-history-list {
   display: grid;
   gap: 0.75rem;
