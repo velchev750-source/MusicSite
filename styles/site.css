@@ -14,6 +14,8 @@
   --navbar-height: 76px;
   --font-body: "Lora", Georgia, serif;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --hover-lift-scale: 1.015;
+  --hover-lift-shadow: 0 10px 26px rgba(28, 28, 28, 0.16);
 }
 
 body {
@@ -506,6 +508,7 @@ main > section.section-sm + section.section-sm::before {
   padding: 2rem;
   background-color: #fffaf2;
   height: 100%;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .media-link {
@@ -515,6 +518,7 @@ main > section.section-sm + section.section-sm::before {
   background: #fffaf2;
   color: var(--charcoal);
   text-decoration: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
 .media-link:hover {
@@ -536,18 +540,35 @@ main > section.section-sm + section.section-sm::before {
 .media-carousel .carousel-item {
   height: min(78vh, 760px);
   background: #121212;
+  overflow: hidden;
 }
 
 .media-carousel img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.26s ease, box-shadow 0.26s ease;
 }
 
 .video-embed-card {
   border: 1px solid #e1dbd0;
   background: #fffaf2;
   padding: 0.65rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (hover: hover) {
+  .media-carousel img:hover {
+    transform: scale(var(--hover-lift-scale));
+    box-shadow: var(--hover-lift-shadow);
+  }
+
+  .event-card:hover,
+  .media-link:hover,
+  .video-embed-card:hover {
+    transform: scale(var(--hover-lift-scale));
+    box-shadow: var(--hover-lift-shadow);
+  }
 }
 
 .video-embed-card iframe {
