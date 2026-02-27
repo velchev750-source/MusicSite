@@ -2,6 +2,9 @@
   background-color: #fffaf2;
   border: 1px solid #e1dbd0;
   padding: 2rem;
+  box-shadow: var(--card-elevation-shadow), var(--card-inner-shadow);
+  backdrop-filter: blur(var(--card-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--card-backdrop-blur));
 }
 
 .booking-widget .calendar-container {
@@ -11,7 +14,9 @@
   background-color: #ffffff;
   padding: 20px 36px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(80, 77, 77, 0.2);
+  box-shadow: var(--card-elevation-shadow), var(--card-inner-shadow);
+  backdrop-filter: blur(var(--card-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--card-backdrop-blur));
 }
 
 .booking-widget .calendar-header {
