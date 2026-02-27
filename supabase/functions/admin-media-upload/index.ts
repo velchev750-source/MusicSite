@@ -86,13 +86,18 @@ Deno.serve(async (req) => {
 
     const body = await req.json();
     const fileName = String(body?.fileName || "").trim();
+    const folder = String(body?.folder || "").trim().toLowerCase();
 
     if (!fileName) {
       return response({ error: "fileName is required." }, 400);
     }
 
+    if (!["photos", "audio", "thumbs"].includes(folder)) {
+      return response({ error: "folder must be one of: photos, audio, thumbs." }, 400);
+    }
+
     const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
-    const path = `uploads/${Date.now()}-${safeName}`;
+    const path = `${folder}/${Date.now()}-${safeName}`;
 
     const { data, error } = await adminClient.storage.from("media").createSignedUploadUrl(path);
     if (error || !data) {

@@ -69,16 +69,8 @@
         <div class="container">
           <h2 class="mb-3">Audio</h2>
           <div id="audioCarousel" class="carousel slide media-carousel" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#audioCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#audioCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#audioCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active"><img src="images/anna.webp" alt="Anna" /></div>
-              <div class="carousel-item"><img src="images/Arila.webp" alt="Arila" /></div>
-              <div class="carousel-item"><img src="images/Elena.webp" alt="Elena" /></div>
-            </div>
+            <div class="carousel-indicators" id="audioCarouselIndicators"></div>
+            <div class="carousel-inner" id="audioCarouselInner"></div>
             <button class="carousel-control-prev" type="button" data-bs-target="#audioCarousel" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>
             </button>
@@ -92,19 +84,9 @@
       <section class="section-sm" id="video">
         <div class="container">
           <h2 class="mb-3">Video</h2>
-          <p id="videoEmbedsMessage" class="account-history-message"></p>
-          <div id="videoEmbedList" class="row g-4 mb-4"></div>
           <div id="videoCarousel" class="carousel slide media-carousel" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#videoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#videoCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#videoCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active"><img src="images/anna.webp" alt="Anna" /></div>
-              <div class="carousel-item"><img src="images/Arila.webp" alt="Arila" /></div>
-              <div class="carousel-item"><img src="images/Elena.webp" alt="Elena" /></div>
-            </div>
+            <div class="carousel-indicators" id="videoCarouselIndicators"></div>
+            <div class="carousel-inner" id="videoCarouselInner"></div>
             <button class="carousel-control-prev" type="button" data-bs-target="#videoCarousel" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>
             </button>
@@ -119,16 +101,8 @@
         <div class="container">
           <h2 class="mb-3">Gallery</h2>
           <div id="galleryCarousel" class="carousel slide media-carousel" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active"><img src="images/anna.webp" alt="Anna" /></div>
-              <div class="carousel-item"><img src="images/Arila.webp" alt="Arila" /></div>
-              <div class="carousel-item"><img src="images/Elena.webp" alt="Elena" /></div>
-            </div>
+            <div class="carousel-indicators" id="galleryCarouselIndicators"></div>
+            <div class="carousel-inner" id="galleryCarouselInner"></div>
             <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>
             </button>
@@ -138,6 +112,50 @@
           </div>
         </div>
       </section>
+
+      <div class="modal fade" id="audioModal" tabindex="-1" aria-labelledby="audioModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="audioModalTitle">Audio</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <audio id="audioModalPlayer" class="w-100" controls preload="metadata"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="videoModalTitle">Video</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="ratio ratio-16x9">
+                <iframe id="videoModalFrame" src="about:blank" title="Video player" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="galleryModalTitle">Gallery</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <img id="galleryModalImage" src="" alt="Gallery image" class="img-fluid" />
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer id="contact">

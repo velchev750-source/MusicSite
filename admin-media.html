@@ -43,24 +43,38 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="adminMediaFile" class="form-label">Choose file</label>
-                <input id="adminMediaFile" class="form-control" type="file" required />
+                <label for="adminMediaTitle" class="form-label">Title</label>
+                <input id="adminMediaTitle" class="form-control" type="text" maxlength="120" required />
+              </div>
+              <div class="mb-3">
+                <label for="adminMediaSubtitle" class="form-label">Subtitle</label>
+                <input id="adminMediaSubtitle" class="form-control" type="text" maxlength="200" />
+              </div>
+              <div class="mb-3">
+                <label for="adminMediaSortOrder" class="form-label">Sort Order</label>
+                <input id="adminMediaSortOrder" class="form-control" type="number" value="0" />
               </div>
               <div id="adminMediaVideoUrlGroup" class="mb-3 d-none">
                 <label for="adminMediaVideoUrl" class="form-label">Video URL</label>
                 <input id="adminMediaVideoUrl" class="form-control" type="url" placeholder="https://" />
               </div>
+              <div id="adminMediaFileGroup" class="mb-3">
+                <label for="adminMediaFile" class="form-label">Main File</label>
+                <input id="adminMediaFile" class="form-control" type="file" />
+                <div class="form-text">Audio uses the <strong>audio/</strong> folder, photos use <strong>photos/</strong>.</div>
+              </div>
+              <div class="mb-3">
+                <label for="adminMediaThumb" class="form-label">Thumbnail</label>
+                <input id="adminMediaThumb" class="form-control" type="file" accept="image/*" />
+                <div class="form-text">Stored in <strong>thumbs/</strong>. Required for video items.</div>
+              </div>
+              <div class="form-check mb-3">
+                <input id="adminMediaPublished" class="form-check-input" type="checkbox" checked />
+                <label for="adminMediaPublished" class="form-check-label">Published</label>
+              </div>
               <p id="adminMediaMessage" class="account-history-message" aria-live="polite"></p>
-              <button id="adminMediaSubmit" type="submit" class="btn auth-submit-btn w-100" disabled>Upload</button>
+              <button id="adminMediaSubmit" type="submit" class="btn auth-submit-btn w-100" disabled>Save Media Item</button>
             </form>
-
-            <hr class="my-4" />
-
-            <section class="account-history-panel">
-              <h2 class="account-history-title">Video Embeds</h2>
-              <p id="adminEmbedMessage" class="account-history-message" aria-live="polite"></p>
-              <div id="adminEmbedList" class="account-history-list"></div>
-            </section>
           </div>
         </div>
       </section>
