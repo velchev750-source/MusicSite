@@ -108,10 +108,20 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     target.setAttribute("disabled", "true");
 
-    const { error } = await supabase.from("contact_messages").delete().eq("id", messageId);
+    const { data, error } = await supabase
+      .from("contact_messages")
+      .delete()
+      .eq("id", messageId)
+      .select("id");
 
     if (error) {
       showAdminMessage("adminMessagesMessage", "Failed to delete message.", true);
+      target.removeAttribute("disabled");
+      return;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+      showAdminMessage("adminMessagesMessage", "Delete was blocked by database policy. Apply the admin delete migration and try again.", true);
       target.removeAttribute("disabled");
       return;
     }
