@@ -111,24 +111,27 @@ import { supabase } from "./scripts/supabaseClient.js";
       dayDiv.appendChild(span);
 
       const dayDate = new Date(`${dateStr}T00:00:00Z`);
+      const isPastDate = dayDate < today;
+      const isBookedDate = blockedDates.has(dateStr);
 
-      if (dayDate < today) {
-        dayDiv.classList.add("disabled");
+      if (isPastDate) {
+        dayDiv.classList.add("past", "disabled");
       }
 
-      if (blockedDates.has(dateStr)) {
-        dayDiv.classList.add("full", "disabled");
+      if (isBookedDate) {
+        dayDiv.classList.add("full", "unavailable", "disabled");
+        dayDiv.title = "Already booked";
+        dayDiv.setAttribute("aria-label", `${dayNumber}, Already booked`);
       }
 
       if (selectedDate && normalizeDate(selectedDate) === dateStr) {
         dayDiv.classList.add("selected");
       }
 
-      if (selectedDate && dayDate < today) {
-        dayDiv.classList.add("disabled");
+      if (!isPastDate && !isBookedDate) {
+        dayDiv.classList.add("selectable");
+        dayDiv.addEventListener("click", () => handleDateSelection(dayDiv));
       }
-
-      dayDiv.addEventListener("click", () => handleDateSelection(dayDiv));
       calendar.appendChild(dayDiv);
     }
 

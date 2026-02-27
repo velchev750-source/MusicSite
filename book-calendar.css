@@ -64,19 +64,35 @@
   margin-top: 10px;
 }
 
-.booking-widget .day.disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
 .booking-widget .day {
   position: relative;
   width: 100%;
   padding-top: 100%;
   border-radius: 5px;
   background-color: #eaeaea;
-  cursor: pointer;
+  cursor: default;
   overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.booking-widget .day.selectable {
+  cursor: pointer;
+}
+
+.booking-widget .day.past {
+  opacity: 0.5;
+}
+
+.booking-widget .day.unavailable {
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .booking-widget .day.selectable:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(28, 28, 28, 0.16);
+    background-color: #e3d4b6;
+  }
 }
 
 .booking-widget .day span {
