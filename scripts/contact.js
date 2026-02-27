@@ -10,6 +10,15 @@ function setMessage(text, isError = false) {
   box.className = `auth-message ${isError ? "auth-message-error" : "auth-message-success"}`;
 }
 
+function isMissingTelephoneColumn(error) {
+  if (!error) {
+    return false;
+  }
+
+  const errorText = `${error.message || ""} ${error.details || ""} ${error.hint || ""}`.toLowerCase();
+  return errorText.includes("telephone") && errorText.includes("column");
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contact-form");
   if (!(form instanceof HTMLFormElement)) {
@@ -99,13 +108,27 @@ window.addEventListener("DOMContentLoaded", () => {
       data: { session },
     } = await supabase.auth.getSession();
 
-    const { error } = await supabase.from("contact_messages").insert({
+    const payloadWithTelephone = {
       user_id: session?.user?.id || null,
       name,
       email,
       telephone: telephone || null,
       message,
-    });
+    };
+
+    const payloadWithoutTelephone = {
+      user_id: session?.user?.id || null,
+      name,
+      email,
+      message,
+    };
+
+    let { error } = await supabase.from("contact_messages").insert(payloadWithTelephone);
+
+    if (error && isMissingTelephoneColumn(error)) {
+      const retryResult = await supabase.from("contact_messages").insert(payloadWithoutTelephone);
+      error = retryResult.error;
+    }
 
     if (error) {
       setMessage("Could not send message right now.", true);
