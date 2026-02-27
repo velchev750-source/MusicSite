@@ -18,10 +18,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const nameInput = document.getElementById("contact-name");
   const emailInput = document.getElementById("contact-email");
+  const telephoneInput = document.getElementById("contact-telephone");
   const messageInput = document.getElementById("contact-message");
   const authHint = document.getElementById("contact-auth-hint");
 
-  if (!(nameInput instanceof HTMLInputElement) || !(emailInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement)) {
+  if (!(nameInput instanceof HTMLInputElement) || !(emailInput instanceof HTMLInputElement) || !(telephoneInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement)) {
     return;
   }
 
@@ -87,6 +88,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const message = messageInput.value.trim();
     const name = isAuthenticatedUser ? resolvedName : nameInput.value.trim();
     const email = isAuthenticatedUser ? resolvedEmail : emailInput.value.trim();
+    const telephone = telephoneInput.value.trim();
 
     if (!message || (!isAuthenticatedUser && (!name || !email))) {
       setMessage("Please fill all fields.", true);
@@ -101,6 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
       user_id: session?.user?.id || null,
       name,
       email,
+      telephone: telephone || null,
       message,
     });
 

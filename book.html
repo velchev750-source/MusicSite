@@ -71,7 +71,7 @@
                         <div class="dates">Selected date: <strong id="selectedBookingDate">—</strong></div>
                       </div>
 
-                      <form class="booking-form" id="bookingForm">
+                      <form class="booking-form" id="bookingForm" novalidate>
                         <label for="name">Type of Event<span>*</span></label>
                         <select id="name" required>
                           <option value="" selected disabled>Select event type</option>
@@ -195,6 +195,8 @@
                           <option>3 hours</option>
                           <option>4+ hours</option>
                         </select>
+
+                        <div id="bookingFormFeedback" class="booking-form-feedback" role="status" aria-live="polite"></div>
 
                         <button class="submit-btn" type="submit">Send booking request</button>
                       </form>

@@ -164,6 +164,34 @@ import { supabase } from "./scripts/supabaseClient.js";
   const closeDialogBtn = document.getElementById("closeDialog");
   const bookingForm = document.getElementById("bookingForm");
   const selectedBookingDate = document.getElementById("selectedBookingDate");
+  const bookingFormFeedback = document.getElementById("bookingFormFeedback");
+
+  const eventTypeField = document.getElementById("name");
+  const eventHourField = document.getElementById("eventHour");
+  const eventMinuteField = document.getElementById("eventMinute");
+  const durationField = document.getElementById("phone");
+
+  function setFormFeedback(type, message, withCheckIcon = false) {
+    if (!bookingFormFeedback) {
+      return;
+    }
+
+    bookingFormFeedback.classList.remove("is-error", "is-success");
+    bookingFormFeedback.textContent = "";
+
+    if (!message) {
+      return;
+    }
+
+    bookingFormFeedback.classList.add(type === "success" ? "is-success" : "is-error");
+
+    if (withCheckIcon) {
+      bookingFormFeedback.innerHTML = `<span class="booking-form-feedback-icon" aria-hidden="true">✓</span>${message}`;
+      return;
+    }
+
+    bookingFormFeedback.textContent = message;
+  }
 
   let scrollTop = 0;
 
@@ -205,6 +233,7 @@ import { supabase } from "./scripts/supabaseClient.js";
     disableScroll();
 
     selectedBookingDate.textContent = normalizeDate(selectedDate);
+    setFormFeedback("error", "");
 
     dialog.classList.remove("hide", "show");
     dialog.showModal();
@@ -227,9 +256,23 @@ import { supabase } from "./scripts/supabaseClient.js";
   bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!selectedDate) {
+    if (!selectedDate || !eventTypeField || !eventHourField || !eventMinuteField || !durationField) {
+      setFormFeedback("error", "Please complete all required booking details.");
       return;
     }
+
+    const eventType = eventTypeField.value || "";
+    const eventHour = eventHourField.value || "";
+    const eventMinute = eventMinuteField.value || "";
+    const desiredDuration = durationField.value || "";
+    const eventTime = eventHour && eventMinute ? `${eventHour}:${eventMinute}` : "";
+
+    if (!eventType || !eventTime || !desiredDuration) {
+      setFormFeedback("error", "Please fill all required fields before sending.");
+      return;
+    }
+
+    setFormFeedback("error", "");
 
     const { data: sessionData } = await supabase.auth.getSession();
     const session = sessionData.session;
@@ -237,17 +280,6 @@ import { supabase } from "./scripts/supabaseClient.js";
     if (!session) {
       window.alert("Please log in before sending a booking request.");
       window.location.href = "login.html";
-      return;
-    }
-
-    const eventType = document.getElementById("name")?.value || "";
-    const eventHour = document.getElementById("eventHour")?.value || "";
-    const eventMinute = document.getElementById("eventMinute")?.value || "";
-    const eventTime = eventHour && eventMinute ? `${eventHour}:${eventMinute}` : "";
-    const desiredDuration = document.getElementById("phone")?.value || "";
-
-    if (!eventTime) {
-      window.alert("Please select event time (hour and minute).");
       return;
     }
 
@@ -265,12 +297,17 @@ import { supabase } from "./scripts/supabaseClient.js";
       return;
     }
 
-    selectedDate = null;
-    selectedBookingDate.textContent = "—";
+    setFormFeedback("success", "Request sent successfully", true);
 
-    closeBookingDialog();
-    bookingForm.reset();
-    await updateCalendar();
+    selectedDate = null;
+
+    setTimeout(async () => {
+      selectedBookingDate.textContent = "—";
+      closeBookingDialog();
+      bookingForm.reset();
+      setFormFeedback("error", "");
+      await updateCalendar();
+    }, 900);
   });
 
   updateCalendar();

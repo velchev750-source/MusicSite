@@ -303,3 +303,41 @@
   background: #aa905f;
   border-color: #aa905f;
 }
+
+.booking-widget .booking-form-feedback {
+  min-height: 1.4rem;
+  margin: -4px 0 12px;
+  font-size: 0.95rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.booking-widget .booking-form-feedback.is-error {
+  color: rgba(138, 113, 59, 0.9);
+}
+
+.booking-widget .booking-form-feedback.is-success {
+  color: rgba(106, 129, 79, 0.92);
+}
+
+.booking-widget .booking-form-feedback-icon {
+  display: inline-block;
+  margin-right: 0.32rem;
+  opacity: 0;
+  transform: translateY(2px) scale(0.9);
+}
+
+.booking-widget .booking-form-feedback.is-success .booking-form-feedback-icon {
+  animation: booking-check-fade-in 380ms ease-out forwards;
+}
+
+@keyframes booking-check-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
