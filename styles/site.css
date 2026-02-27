@@ -14,6 +14,7 @@
   --navbar-height: 76px;
   --font-body: "Lora", Georgia, serif;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --section-vertical-gap: 32px;
   --hover-lift-scale: 1.015;
   --hover-lift-shadow: 0 10px 26px rgba(28, 28, 28, 0.16);
   --card-elevation-shadow: 0 8px 20px rgba(28, 28, 28, 0.08);
@@ -247,6 +248,13 @@ a:hover {
 main > section.section,
 main > section.section-sm {
   position: relative;
+}
+
+main > section.section + section.section,
+main > section.section + section.section-sm,
+main > section.section-sm + section.section,
+main > section.section-sm + section.section-sm {
+  margin-top: var(--section-vertical-gap);
 }
 
 main > section.section + section.section::before,

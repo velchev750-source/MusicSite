@@ -241,8 +241,15 @@ import { supabase } from "./scripts/supabaseClient.js";
     }
 
     const eventType = document.getElementById("name")?.value || "";
-    const eventTime = document.getElementById("email")?.value || "";
+    const eventHour = document.getElementById("eventHour")?.value || "";
+    const eventMinute = document.getElementById("eventMinute")?.value || "";
+    const eventTime = eventHour && eventMinute ? `${eventHour}:${eventMinute}` : "";
     const desiredDuration = document.getElementById("phone")?.value || "";
+
+    if (!eventTime) {
+      window.alert("Please select event time (hour and minute).");
+      return;
+    }
 
     const { error } = await supabase.from("booking_inquiries").insert({
       user_id: session.user.id,

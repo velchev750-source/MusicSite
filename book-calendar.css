@@ -241,6 +241,26 @@
   text-align: center;
 }
 
+.booking-widget .time-picker-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.booking-widget .time-picker-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-widget .time-picker-sub-label {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
 .booking-widget .booking-form label span {
   color: #b00020;
 }
