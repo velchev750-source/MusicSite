@@ -215,6 +215,33 @@ a:hover {
   margin: 0 auto 3rem;
 }
 
+.display-5,
+.section-title h2,
+.auth-title {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+}
+
+.display-5::before,
+.section-title h2::before,
+.auth-title::before {
+  content: "";
+  position: absolute;
+  left: -0.5rem;
+  right: -0.5rem;
+  top: 50%;
+  height: 1.15em;
+  transform: translateY(-44%) rotate(-1.3deg);
+  z-index: -1;
+  border-radius: 999px;
+  background:
+    radial-gradient(120% 95% at 14% 52%, rgba(191, 164, 111, 0.16), rgba(191, 164, 111, 0) 60%),
+    radial-gradient(120% 95% at 86% 48%, rgba(28, 28, 28, 0.12), rgba(28, 28, 28, 0) 64%),
+    linear-gradient(90deg, rgba(248, 245, 240, 0), rgba(248, 245, 240, 0.42) 12%, rgba(248, 245, 240, 0.42) 88%, rgba(248, 245, 240, 0));
+  filter: blur(0.2px);
+}
+
 .auth-main {
   min-height: calc(100dvh - var(--navbar-height));
 }
