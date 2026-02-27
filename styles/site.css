@@ -3,6 +3,14 @@
   --charcoal: #1c1c1c;
   --gold: #bfa46f;
   --soft-gray: #e3dfd7;
+  --section-divider-gradient: linear-gradient(
+    90deg,
+    rgba(191, 164, 111, 0) 0%,
+    rgba(191, 164, 111, 0.52) 16%,
+    rgba(191, 164, 111, 0.72) 50%,
+    rgba(191, 164, 111, 0.52) 84%,
+    rgba(191, 164, 111, 0) 100%
+  );
   --navbar-height: 76px;
   --font-body: "Lora", Georgia, serif;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
@@ -54,6 +62,36 @@ a:hover {
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.06em;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.3rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0.75;
+  transition: transform 0.22s ease;
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link:active::after,
+.navbar .nav-link:focus-visible::after,
+.navbar .nav-link.active::after,
+.navbar .nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.navbar .nav-link:active,
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+  color: var(--gold);
 }
 
 .nav-auth-item {
@@ -199,6 +237,26 @@ a:hover {
 
 .section {
   padding: 4.5rem 0;
+}
+
+main > section.section,
+main > section.section-sm {
+  position: relative;
+}
+
+main > section.section + section.section::before,
+main > section.section + section.section-sm::before,
+main > section.section-sm + section.section::before,
+main > section.section-sm + section.section-sm::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(220px, 46vw);
+  height: 1px;
+  background: var(--section-divider-gradient);
+  box-shadow: 0 1px 3px rgba(28, 28, 28, 0.14);
 }
 
 #about.section {
@@ -420,10 +478,27 @@ a:hover {
 }
 
 .divider {
-  width: 90px;
+  width: min(220px, 46vw);
   height: 1px;
-  background-color: var(--gold);
-  margin: 2rem auto;
+  margin: 2.2rem auto;
+  position: relative;
+  background: var(--section-divider-gradient);
+  box-shadow: 0 1px 3px rgba(28, 28, 28, 0.14);
+}
+
+.divider::after {
+  content: "♪";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: rgba(191, 164, 111, 0.86);
+  background: var(--ivory);
+  padding: 0 0.35rem;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(28, 28, 28, 0.14);
 }
 
 .event-card {
