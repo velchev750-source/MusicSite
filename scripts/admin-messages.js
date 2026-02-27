@@ -44,10 +44,37 @@ function renderMessages(items) {
         <p class="mb-1"><strong>Email:</strong> ${escapeHtml(message.email)}</p>
         ${message.telephone ? `<p class="mb-1"><strong>Telephone:</strong> ${escapeHtml(message.telephone)}</p>` : ""}
         <p class="mb-0">${escapeHtml(message.message)}</p>
+        <div class="d-flex justify-content-end mt-2">
+          <button type="button" class="btn account-cancel-btn" data-delete-message-id="${message.id}">Delete</button>
+        </div>
       </article>
     `
     )
     .join("");
+}
+
+async function loadMessages() {
+  let { data, error } = await supabase
+    .from("contact_messages")
+    .select("id, name, email, telephone, message, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error && isMissingTelephoneColumn(error)) {
+    const retryResult = await supabase
+      .from("contact_messages")
+      .select("id, name, email, message, created_at")
+      .order("created_at", { ascending: false });
+
+    data = retryResult.data;
+    error = retryResult.error;
+  }
+
+  if (error) {
+    showAdminMessage("adminMessagesMessage", "Failed to load messages.", true);
+    return;
+  }
+
+  renderMessages(data || []);
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -56,25 +83,40 @@ window.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-    let { data, error } = await supabase
-      .from("contact_messages")
-      .select("id, name, email, telephone, message, created_at")
-      .order("created_at", { ascending: false });
+  await loadMessages();
 
-    if (error && isMissingTelephoneColumn(error)) {
-      const retryResult = await supabase
-        .from("contact_messages")
-        .select("id, name, email, message, created_at")
-        .order("created_at", { ascending: false });
-
-      data = retryResult.data;
-      error = retryResult.error;
-    }
-
-  if (error) {
-    showAdminMessage("adminMessagesMessage", "Failed to load messages.", true);
+  const list = document.getElementById("adminMessagesList");
+  if (!list) {
     return;
   }
 
-  renderMessages(data || []);
+  list.addEventListener("click", async (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const messageId = target.dataset.deleteMessageId;
+    if (!messageId) {
+      return;
+    }
+
+    const confirmed = window.confirm("Delete this message?");
+    if (!confirmed) {
+      return;
+    }
+
+    target.setAttribute("disabled", "true");
+
+    const { error } = await supabase.from("contact_messages").delete().eq("id", messageId);
+
+    if (error) {
+      showAdminMessage("adminMessagesMessage", "Failed to delete message.", true);
+      target.removeAttribute("disabled");
+      return;
+    }
+
+    showAdminMessage("adminMessagesMessage", "Message deleted.");
+    await loadMessages();
+  });
 });
