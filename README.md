@@ -2,6 +2,10 @@
 
 A lightweight static site for the Arte+ classical trio. Built with Vite and vanilla JavaScript, the project includes a small admin area, booking calendar with availability, and a contact form that writes to Supabase.
 
+##LOGINS за проверка от SoftUni 
+acc:  velchevADMIN
+pass: parolaadmin
+
 ## Features
 - Responsive landing, media and booking pages
 - Shared `styles/site.css` for consistent look & feel
@@ -92,7 +96,3 @@ By default the client uses the public/publishable Supabase URL and key found in 
 ISC
 
 ---
-
-If you want I can also:
-- Add a short contributing guide and coding style notes
-- Add a small verification script to run lint/build/test commands automatically
