@@ -626,6 +626,57 @@ main > section.section-sm + section.section-sm::before {
   background: #121212;
 }
 
+.gallery-modal-body {
+  position: relative;
+  min-height: 56vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#galleryModalImage {
+  max-height: min(72vh, 820px);
+  width: auto;
+  object-fit: contain;
+}
+
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 164, 111, 0.72);
+  background: rgba(28, 28, 28, 0.42);
+  color: #f8f5f0;
+  font-size: 1.75rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.gallery-nav-prev {
+  left: 1rem;
+}
+
+.gallery-nav-next {
+  right: 1rem;
+}
+
+.gallery-nav-btn:hover,
+.gallery-nav-btn:focus-visible {
+  background: rgba(28, 28, 28, 0.62);
+  border-color: rgba(191, 164, 111, 0.95);
+}
+
+.gallery-nav-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .form-control {
   border-radius: 0;
 }
