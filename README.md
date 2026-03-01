@@ -2,11 +2,6 @@
 
 A lightweight static site for the Arte+ classical trio. Built with Vite and vanilla JavaScript, the project includes a small admin area, booking calendar with availability, and a contact form that writes to Supabase.
 
-## LOGINS за проверка от SoftUni
-
-- acc: velchevADMIN
-- pass: parolaadmin
-
 ## Features
 
 - Responsive landing, media and booking pages
@@ -14,6 +9,34 @@ A lightweight static site for the Arte+ classical trio. Built with Vite and vani
 - Booking calendar with selectable dates and form-based booking inquiries
 - Admin UI for reviewing contact messages and booking inquiries
 - Supabase migrations in `supabase/migrations` for DB schema and RLS policies
+
+## Architecture
+
+- **Frontend:** Multi-page Vite setup (`index.html`, `about.html`, `media.html`, `book.html`, `contact.html`, admin pages) with Vanilla JavaScript modules in `scripts/`.
+- **Backend (Supabase):** PostgreSQL stores domain data, Supabase Auth manages sessions and user identity, and Row Level Security (RLS) enforces access rules at table level.
+- **Edge Functions:** `admin-review-booking` handles admin approval/denial workflows and booking creation; `admin-media-upload` issues signed upload URLs for controlled media uploads.
+- **Storage:** Supabase Storage bucket `media` stores uploaded audio/images/thumbnails, with public read where applicable and admin-restricted write/update/delete policies.
+- **Authentication flow:** Users sign in via Supabase Auth; session persistence is handled client-side (`persistSession` + refresh). Protected pages use auth guards (`requireAuthenticatedUser`) and redirect unauthenticated users.
+- **Role system:** Role separation is implemented through the `admins` table. Admin pages and privileged operations require the authenticated user to exist in `admins`; otherwise access is denied or redirected.
+
+## Database Schema Design
+
+Core entities are normalized around Supabase Auth users, with table-level RLS policies to enforce ownership and admin-only operations.
+
+- **`booking_requests`:** Initial booking request table used in the early model. Superseded by split structures (`booking_inquiries` + `bookings`) and kept for migration/history compatibility.
+- **`booking_inquiries`:** User-submitted booking intents (event details, preferred duration, status lifecycle such as `pending`, `confirmed`, `rejected`, `cancelled`).
+- **`bookings`:** Confirmed time slots derived from inquiries; includes `start_at`/`end_at` and overlap prevention through an exclusion constraint.
+- **`contact_messages`:** Contact form submissions (name, email, message, optional user linkage, timestamp) visible to admins for moderation/response.
+- **`media_items`:** Structured catalog for published/unpublished media metadata (type, title, file paths/URLs, ordering, timestamps).
+- **`media_video_embeds`:** External video links with activation flag; only active embeds are publicly visible.
+- **`admins`:** Authorization mapping table that marks which authenticated users hold administrator privileges.
+
+### Relationships and access control
+
+- Foreign key relationships use Supabase Auth IDs (for example `user_id` / `created_by` references `auth.users.id`) to bind data ownership to authenticated users.
+- Typical ownership linkage appears in `booking_requests`, `booking_inquiries`, `bookings`, `contact_messages`, `media_video_embeds`, and `admins`.
+- RLS is enabled across core tables; normal users can access only their own booking-related records, while admins can read/manage broader operational data.
+- Public read access is intentionally limited to safe content (for example published media, active video embeds, and booking calendar visibility), while write/update/delete actions are role-restricted.
 
 ## Repo layout (important files)
 
