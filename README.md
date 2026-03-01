@@ -2,9 +2,10 @@
 
 A lightweight static site for the Arte+ classical trio. Built with Vite and vanilla JavaScript, the project includes a small admin area, booking calendar with availability, and a contact form that writes to Supabase.
 
-##LOGINS за проверка от SoftUni
-acc: velchevADMIN
-pass: parolaadmin
+## LOGINS за проверка от SoftUni
+
+- acc: velchevADMIN
+- pass: parolaadmin
 
 ## Features
 
